@@ -3,7 +3,7 @@ title: "Tourist Places in India"
 author: "anirban"
 date: "26 June 2017"
 runtime: shiny
-output: html_document
+output: html_document 
 ---
 
 ```{r setup, include=FALSE}
@@ -20,51 +20,11 @@ knitr::opts_chunk$set(echo = TRUE)
 <!-- summary(cars) -->
 <!-- ``` -->
 ```{r echo=FALSE}
-shinyAppDir("www",
-  # system.file("/app", package="shiny"),
+shinyAppDir(appDir = "./",
   options=list(
-    width="100%", height=700
+    width="100%", height=500
   )
 )
-# shinyApp(
-#   
-#   # Define UI for application that draws a histogram
-# ui <- fluidPage(
-#    
-#    # Application title
-#    titlePanel("Old Faithful Geyser Data"),
-#    
-#    # Sidebar with a slider input for number of bins 
-#    sidebarLayout(
-#       sidebarPanel(
-#          sliderInput("bins",
-#                      "Number of bins:",
-#                      min = 1,
-#                      max = 50,
-#                      value = 30)
-#       ),
-#       
-#       # Show a plot of the generated distribution
-#       mainPanel(
-#          plotOutput("distPlot")
-#       )
-#    )
-# ),
-# 
-# # Define server logic required to draw a histogram
-# server <- function(input, output) {
-#    
-#    output$distPlot <- renderPlot({
-#       # generate bins based on input$bins from ui.R
-#       x    <- faithful[, 2] 
-#       bins <- seq(min(x), max(x), length.out = input$bins + 1)
-#       
-#       # draw the histogram with the specified number of bins
-#       hist(x, breaks = bins, col = 'darkgray', border = 'white')
-#    })
-# }
-# 
-# )
 
 ```
 <!-- ## Including Plots -->
