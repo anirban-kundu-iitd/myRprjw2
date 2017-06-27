@@ -1,21 +1,14 @@
 
-# This is the server logic for a Shiny web application.
-# You can find out more about building applications with Shiny here:
-#
-# http://shiny.rstudio.com
-#
-
 library(shiny)
+library (miniUI)
 library(leaflet)
 library(readr)
 library(dplyr)
 
-# indiaGeo_json <- jsonlite::fromJSON("india_states.geojson")
-# reading data from source file
 state_geocodes <- read_csv("state_geocodes.csv")
 
 
-shinyServer(function(input, output) {
+server<-shinyServer(function(input, output) {
   
   #-------------- Data explorer ----------------
   output$cpstable <- renderDataTable({state_geocodes})
@@ -31,7 +24,7 @@ shinyServer(function(input, output) {
                                      "'>", state_geocodes$link,
                                      "</a>",
                                      sep=" ") 
-                       )
+  )
   
   #  curBins<-reactive({input$bins})
   #load the default map 
@@ -50,17 +43,17 @@ shinyServer(function(input, output) {
   
   # # --------- Changes on Map ------------------
   observe({
-
+    
     # output$temp<-renderText({toString(input$bins)})
     # # update colors
     colorpal <- colorBin(palette = "Reds",
                          domain=state_df$population,
                          bins=input$bins,
                          pretty = TRUE )
-
+    
     # update the map data
     state_df<-data.frame(state_df,fcol=colorpal(state_df$population))
-
+    
     leafletProxy("mymap", data=state_df) %>%
       clearMarkers()%>%
       clearControls()%>%
@@ -82,5 +75,5 @@ shinyServer(function(input, output) {
                 opacity = 1
       )
   })# end of observe
-
+  
 })
