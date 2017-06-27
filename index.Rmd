@@ -10,9 +10,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 ```{r echo=FALSE}
-shiny::shinyAppDir(appDir = "./",
+shiny::shinyAppDir(appDir = "/home/delhivery/myAssignment/www",
   options=list(
     width="100%", height=500
   )
 )
-
+```
