@@ -1,18 +1,40 @@
 ---
 title: "Tourist Places in Different States of India"
 author: "anirban"
-date: "27 June 2017"
-runtime: shiny
+date: "5 July 2017"
+# runtime: shiny
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+
 ```
-```{r echo=FALSE}
-shiny::shinyAppDir(appDir = "/home/delhivery/mar/www",
-  options=list(
-    width="100%", height=500
-  )
-)
+ ```{r echo=FALSE}
+# shiny::shinyAppDir(appDir = "/home/delhivery/mar/www",
+#   options=list(
+#     width="100%", height=500
+#   )
+# )
+```
+
+```{r echo=FALSE, message=FALSE}
+
+library(leaflet)
+# 
+# # state_geocodes<-readr::read_csv("state_geocodes.csv")
+State<-c('Andaman And Nicobar', 'Arunachal Pradesh','Assam','Bihar', 'Delhi','Goa', 'Gujarat','Himachal Pradesh','Jammu & Kashmir', 'Madhya Pradesh', 'Maharashtra', 'Punjab', 'Rajasthan', 'Uttar Pradesh', 'Uttarakhand', 'West Bengal' )
+ lat<-c(11.67, 27.1,26.75,25.79,28.67,15.49,22.26,31.1,33.78,21.3,19.25,31.52,26.45,27.6,30.07,22.58)
+ lng<-c(92.74,93.62,94.22,87.48,77.23,73.82,71.19,77.17,76.58,76.13,73.16,75.98,74.64,78.05,79.02,88.33)
+link<-c('http://www.topindiatour.com/andaman-nicobar-island.html','http://www.topindiatour.com/arunachal-pradesh.html','http://www.topindiatour.com/assam-travel.html','http://www.topindiatour.com/bihar-gujarat-travel.html','http://www.topindiatour.com/delhi-travel.html','http://www.topindiatour.com/goa-state-travel.html','http://www.topindiatour.com/bihar-gujarat-travel.html#gujarat','http://www.topindiatour.com/himachal-pradesh-travel.html','http://www.topindiatour.com/jammu-kashmir-travel.html','http://www.topindiatour.com/madhya-pradesh-travel.html','http://www.topindiatour.com/maharastra-travel.html','http://www.topindiatour.com/punjab-travel.html','http://www.topindiatour.com/rajasthan-travel.html','http://www.topindiatour.com/uttar-pradesh-travel.html','http://www.topindiatour.com/uttar-pradesh-travel.html#uttranchal','http://www.topindiatour.com/west-bengal-andaman.html')
+ population<-c(380500, 1255000,30940000,99020000,18980000,1817000,62700000,6856000,12550000,73340000,114200000,27980000,68890000,204200000,10080000,90320000)
+ state_geocodes <- data.frame(State,lat,lng,population,link)
+ 
+ state_df<-data.frame(lat=as.numeric(state_geocodes$lat),lng= as.numeric(state_geocodes$lng),population= state_geocodes$`population`,popup= paste( state_geocodes$State,"<br> Population:",state_geocodes$population,"<br>visit tourist pacles: <br> <a href='",state_geocodes$`link`,"'>", state_geocodes$link,"</a>",sep=" ") )
+state_geocodes%>%
+  leaflet()%>%
+  addTiles()%>%
+  addCircleMarkers(popup=state_df$popup, col="#ee23ef" )%>%
+  addCircles(weight=.01, radius= state_df$population/100000)
+
 ```
